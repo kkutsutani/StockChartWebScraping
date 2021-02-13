@@ -11,10 +11,23 @@ wb = xlrd.open_workbook( fname )                # xlsファイルのBookオブ�
 sheet = wb.sheet_by_name( 'stocks' )            # 指定シートを取得
 
 #######################################
+# 出力ディレクトリ 作成
+#######################################
+cnt = 1                                         # 作成ディレクトリ名を変更するための数字
+new_dir_path = 'jpg_files'                      # 作成するディレクトリ名
+while True:
+    try:
+        os.mkdir(new_dir_path)                  # ディレクトリを作成する
+        break                                   # ディレクトリ作成が成功すれば抜ける
+    except FileExistsError:                     # ディレクトリが存在していた場合
+        new_dir_path = 'jpg_files' + str(cnt)   # ディレクトリ名を変更(末尾に番号付加)
+        cnt += 1                                # 末尾に付加用の数字+1
+
+#######################################
 # スクレイピング 設定
 #######################################
-# 時間　1日: 1d、1週: 5d、1ヶ月: 1m、3ヶ月: 3m、6ヶ月: 6m、1年: 1y、2年: 2y、5年: 5y
-paramTime = '5y'                                # ※※要設定※※
+# 時間　1日: 1d、1週: 5d、1ヶ月: 1m、3ヶ月: 3m、6ヶ月: 6m、1年: 1y、2年: 2y、5年: 5y、10年: ay
+paramTime = 'ay'                                # ※※要設定※※
 # 画像サイズ　標準: m、大: n
 paramSize = 'n'                                 # ※※要設定※※
 # 基本URL
@@ -35,7 +48,7 @@ while lineno < sheet.nrows:                     # 最終行まで
     if cell.value > 1000 or cell.value < 10000: # セルが正常範囲
 
         # 出力ファイル名を作成
-        output_path = os.getcwd() + '\\' + str(int(cell.value)) + '.png'
+        output_path = os.getcwd() + '\\' + new_dir_path + '\\' + str(int(cell.value)) + '.png'
 
         # 出力ファイルを開く
         with open( output_path, 'wb') as f:
