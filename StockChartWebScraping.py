@@ -48,7 +48,10 @@ while lineno < sheet.nrows:                     # 最終行まで
     if cell.value > 1000 or cell.value < 10000: # セルが正常範囲
 
         # 出力ファイル名を作成
-        output_path = os.getcwd() + '\\' + new_dir_path + '\\' + str(int(cell.value)) + '.png'
+        if os.name == 'nt':     # OSがWindowsの場合
+            output_path = os.getcwd() + '\\' + new_dir_path + '\\' + str(int(cell.value)) + '.png'
+        else:                   # OSがWindows以外の場合(Linuxを想定)
+            output_path = os.getcwd() + '/' + new_dir_path + '/' + str(int(cell.value)) + '.png'
 
         # 出力ファイルを開く
         with open( output_path, 'wb') as f:
