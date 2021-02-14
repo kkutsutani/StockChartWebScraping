@@ -45,7 +45,7 @@ while lineno < sheet.nrows:                     # 最終行まで
     cell = sheet.cell( lineno, 0 )              # セルを読む
     if cell.ctype == 0:                         # セルが空白の場合
         break                                   # ループを抜ける
-    if cell.value > 1000 or cell.value < 10000: # セルが正常範囲
+    if cell.value > 1000 and cell.value < 10000: # セルが正常範囲
 
         # 出力ファイル名を作成
         if os.name == 'nt':     # OSがWindowsの場合
